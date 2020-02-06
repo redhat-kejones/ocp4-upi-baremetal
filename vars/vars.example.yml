@@ -1,0 +1,17 @@
+domain: example.com
+ocp4_provisioner_hostname: ocp4-provisioner
+ocp4_provisioner_public_ip: 192.0.2.250
+ocp4_provisioner_ssh_user: cloud-user
+ocp4_version: 4.3.0
+rhsm_unregister: false
+rhsm_org_id: ORGID
+rhsm_activationkey: rhel-8-activation-key
+rhsm_server_hostname: "satellite.{{ domain }}"
+rhsm_consumer_name: "{{ ocp4_provisioner_hostname }}.{{ domain }}"
+rhsm_repositories:
+  disabled:
+    - '*'
+  enabled:
+    - rhel-8-for-x86_64-baseos-rpms
+    - rhel-8-for-x86_64-appstream-rpms
+

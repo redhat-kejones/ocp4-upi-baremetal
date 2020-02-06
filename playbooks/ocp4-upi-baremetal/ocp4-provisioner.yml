@@ -1,0 +1,23 @@
+---
+- hosts: ocp4-provisioner
+  tasks:
+  - name: remove 192.168.122.1 from resolv.conf
+    become: yes
+    lineinfile:
+      path: /etc/resolv.conf
+      line: nameserver 192.168.122.1
+      state: absent
+
+  - name: install Satellite 6 CA consumer package
+    become: yes
+    package:
+      name: http://satellite.kdjlab.com/pub/katello-ca-consumer-latest.noarch.rpm
+      state: present
+
+  - name: run ocp4 provisioner role
+    include_role:
+      name: oasis_roles.rhsm
+
+  - name: run ocp4 provisioner role
+    include_role:
+      name: ansible-ocp4-provisioner

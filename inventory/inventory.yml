@@ -1,0 +1,11 @@
+---
+
+all:
+  hosts:
+    localhost:
+      ansible_python_interpreter: python
+      ansible_connection: local
+    ocp4-provisioner:
+      ansible_host: "{{ ocp4_provisioner_public_ip }}"
+      ansible_ssh_user: "{{ ocp4_provisioner_ssh_user }}"
+      ansible_python_interpreter: /usr/libexec/platform-python
