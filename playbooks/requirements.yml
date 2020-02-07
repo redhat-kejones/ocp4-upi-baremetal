@@ -1,4 +1,5 @@
 #from galaxy
 - src: oasis_roles.rhsm
+- src: kjw3.proxmox_vm
 #from GitHub
 - src: https://github.com/redhat-kejones/ansible-ocp4-provisioner.git

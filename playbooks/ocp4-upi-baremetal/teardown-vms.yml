@@ -1,0 +1,30 @@
+---
+- hosts: localhost
+  tasks:
+  - name: teardown bootstrap VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: teardown_vm
+    vars:
+      vm_name: "{{ bootstrap_vm_name }}"
+
+  - name: teardown master0 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: teardown_vm
+    vars:
+      vm_name: "{{ master0_vm_name }}"
+
+  - name: teardown master1 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: teardown_vm
+    vars:
+      vm_name: "{{ master1_vm_name }}"
+
+  - name: teardown master2 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: teardown_vm
+    vars:
+      vm_name: "{{ master2_vm_name }}"

@@ -1,0 +1,32 @@
+---
+- hosts: ocp4_provisioner
+  tasks:
+  - name: run ocp4 provisioner role
+    include_role:
+      name: ansible-ocp4-provisioner
+      tasks_from: cluster_prep
+
+  - name: copy ignition configs to localhost
+    fetch:
+      src: ~/ocp4/{{ ocp4_cluster_name }}/{{ item }}
+      dest: /tmp/{{ item }}
+      flat: yes
+    loop:
+      - bootstrap.ign
+      - master.ign
+      - worker.ign
+
+- hosts: webserver
+  become: yes
+  tasks:
+  - name: copy ignition configs to web server
+    copy:
+      src: /tmp/{{ item }}
+      dest: /volume1/web/ocp4/ign/{{ item }}
+      owner: http
+      group: http
+      mode: 0644
+    loop:
+      - bootstrap.ign
+      - master.ign
+      - worker.ign

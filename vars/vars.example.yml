@@ -1,11 +1,8 @@
 domain: example.com
-ocp4_provisioner_hostname: ocp4-provisioner
-ocp4_provisioner_public_ip: 192.0.2.250
-ocp4_provisioner_ssh_user: cloud-user
-ocp4_version: 4.3.0
+
 rhsm_unregister: false
 rhsm_org_id: ORGID
-rhsm_activationkey: rhel-8-activation-key
+rhsm_activationkey: activation-key
 rhsm_server_hostname: "satellite.{{ domain }}"
 rhsm_consumer_name: "{{ ocp4_provisioner_hostname }}.{{ domain }}"
 rhsm_repositories:
@@ -15,3 +12,117 @@ rhsm_repositories:
     - rhel-8-for-x86_64-baseos-rpms
     - rhel-8-for-x86_64-appstream-rpms
 
+proxmox_user: root@pam
+proxmox_password: p@ssw0rd
+proxmox_host: pve1
+proxmox_ssh_user: root
+
+webserver_public_ip: 192.0.2.11
+webserver_ssh_user: admin
+webserver_ssh_pass: p@ssw0rd
+
+ocp4_provisioner_hostname: ocp-provisioner
+ocp4_provisioner_public_ip: 192.0.2.28
+ocp4_provisioner_ssh_user: cloud-user
+ocp4_version: 4.3.0
+ocp4_cluster_name: ocp
+ocp4_pull_secret: 'get from cloud.redhat.com'
+
+ocp4_provisioner_vm_clone: rhel81-cloud-image
+ocp4_provisioner_vm_node: "{{ proxmox_host }}"
+ocp4_provisioner_vm_name: "{{ ocp4_provisioner_hostname }}.{{ ocp4_cluster_name }}.{{ domain }}"
+ocp4_provisioner_vm_pool: example
+ocp4_provisioner_vm_disk_gb: 20
+ocp4_provisioner_vm_cores: 1
+ocp4_provisioner_vm_ram: 4096
+ocp4_provisioner_vm_nics:
+  - index: 0
+    config: "virtio,bridge=vmbr1"
+    ip: 192.0.2.28
+    prefix: 22
+    gateway: "192.0.2.1"
+
+ocp4_bootstrap_public_ip: 192.0.2.29
+ocp4_bootstrap_ssh_user: cloud-user
+
+ocp4_bootstrap_vm_clone: rhel81-cloud-image
+ocp4_bootstrap_vm_node: "{{ proxmox_host }}"
+ocp4_bootstrap_vm_name: "bootstrap.{{ ocp4_cluster_name }}.{{ domain }}"
+ocp4_bootstrap_vm_pool: example
+ocp4_bootstrap_vm_disk_gb: 110
+ocp4_bootstrap_vm_cores: 4
+ocp4_bootstrap_vm_ram: 16384
+ocp4_bootstrap_vm_nics:
+  - index: 0
+    config: "virtio,bridge=vmbr1"
+    ip: 192.0.2.29
+    prefix: 22
+    gateway: "192.0.2.1"
+
+ocp4_master_vm_clone: rhel81-cloud-image
+ocp4_master_vm_node: "{{ proxmox_host }}"
+ocp4_master0_vm_name: "master0.{{ ocp4_cluster_name }}.{{ domain }}"
+ocp4_master1_vm_name: "master1.{{ ocp4_cluster_name }}.{{ domain }}"
+ocp4_master2_vm_name: "master2.{{ ocp4_cluster_name }}.{{ domain }}"
+ocp4_master_vm_pool: example
+ocp4_master_vm_disk_gb: 110
+ocp4_master_vm_cores: 4
+ocp4_master_vm_ram: 16384
+ocp4_master0_vm_nics:
+  - index: 0
+    config: "virtio,bridge=vmbr1"
+    ip: 192.0.2.25
+    prefix: 22
+    gateway: "192.0.2.1"
+ocp4_master1_vm_nics:
+  - index: 0
+    config: "virtio,bridge=vmbr1"
+    ip: 192.0.2.26
+    prefix: 22
+    gateway: "192.0.2.1"
+ocp4_master2_vm_nics:
+  - index: 0
+    config: "virtio,bridge=vmbr1"
+    ip: 192.0.2.27
+    prefix: 22
+    gateway: "192.0.2.1"
+
+validation_errors: []
+
+baremetal_nodes:
+  - name: node0
+    profile: control
+    pm_addr: "192.0.2.30"
+    pm_user: "ADMIN"
+    pm_pwd: "PASS"
+    pm_driver: "pxe_ipmitool"
+  - name: node1
+    profile: control
+    pm_addr: "192.0.2.31"
+    pm_user: "ADMIN"
+    pm_pwd: "PASS"
+    pm_driver: "pxe_ipmitool"
+  - name: node2
+    profile: control
+    pm_addr: "192.0.2.32"
+    pm_user: "ADMIN"
+    pm_pwd: "PASS"
+    pm_driver: "pxe_ipmitool"
+  - name: node3
+    profile: control
+    pm_addr: "192.0.2.33"
+    pm_user: "ADMIN"
+    pm_pwd: "PASS"
+    pm_driver: "pxe_ipmitool"
+  - name: node4
+    profile: control
+    pm_addr: "192.0.2.34"
+    pm_user: "ADMIN"
+    pm_pwd: "PASS"
+    pm_driver: "pxe_ipmitool"
+  - name: node5
+    profile: control
+    pm_addr: "192.0.2.35"
+    pm_user: "ADMIN"
+    pm_pwd: "PASS"
+    pm_driver: "pxe_ipmitool"

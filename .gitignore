@@ -12,10 +12,12 @@ vars/*
 *.pub
 *ifcfg*
 *.tgz
+pull-secret.txt
 playbooks/roles/ansible-*
 playbooks/roles/redhatgov*
 playbooks/roles/RedHatGov*
 playbooks/roles/oasis_roles*
+playbooks/roles/kjw3*
 
 ###############################################################################
 # Python

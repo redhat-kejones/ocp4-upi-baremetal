@@ -5,7 +5,36 @@ all:
     localhost:
       ansible_python_interpreter: python
       ansible_connection: local
-    ocp4-provisioner:
+    ocp4_provisioner:
+      ansible_python_interpreter: /usr/libexec/platform-python
       ansible_host: "{{ ocp4_provisioner_public_ip }}"
       ansible_ssh_user: "{{ ocp4_provisioner_ssh_user }}"
-      ansible_python_interpreter: /usr/libexec/platform-python
+    webserver:
+      ansible_host: "{{ webserver_public_ip }}"
+      ansible_ssh_user: "{{ webserver_ssh_user }}"
+      ansible_ssh_pass: "{{ webserver_ssh_pass }}"
+      ansible_become_password: "{{ webserver_ssh_pass }}"
+  children:
+    pve:
+      hosts:
+        pve1.kjw3.lab:
+          ansible_ssh_user: "{{ proxmox_ssh_user }}"
+    bootstrap:
+      hosts:
+        bootstrap.{{ ocp4_cluster_name }}.{{ domain }}:
+          ansible_python_interpreter: /usr/libexec/platform-python
+          ansible_host: "{{ ocp4_bootstrap_public_ip }}"
+          ansible_ssh_user: "{{ ocp4_bootstrap_ssh_user }}"
+    node:
+      hosts:
+        sbx0.{{ domain }}:
+        sbx1.{{ domain }}:
+        sbx2.{{ domain }}:
+        sbx5.{{ domain }}:
+        sbx6.{{ domain }}:
+        sbx7.{{ domain }}:
+    ocs:
+      hosts:
+        sbx5.{{ domain }}:
+        sbx6.{{ domain }}:
+        sbx7.{{ domain }}:

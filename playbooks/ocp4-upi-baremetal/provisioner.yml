@@ -1,5 +1,5 @@
 ---
-- hosts: ocp4-provisioner
+- hosts: ocp4_provisioner
   tasks:
   - name: remove 192.168.122.1 from resolv.conf
     become: yes
@@ -14,10 +14,10 @@
       name: http://satellite.kdjlab.com/pub/katello-ca-consumer-latest.noarch.rpm
       state: present
 
-  - name: run ocp4 provisioner role
+  - name: register to Satellite
     include_role:
       name: oasis_roles.rhsm
 
-  - name: run ocp4 provisioner role
+  - name: run OpenShift 4 provisioner role
     include_role:
       name: ansible-ocp4-provisioner

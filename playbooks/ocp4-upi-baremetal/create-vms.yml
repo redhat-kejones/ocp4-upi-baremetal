@@ -1,0 +1,156 @@
+---
+- hosts: localhost
+  name: create and configure OpenShift provisioner VM
+  tasks:
+  - name: create OpenShift provisioner VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: clone_vm
+    vars:
+      vm_name: "{{ ocp4_provisioner_vm_name }}"
+      vm_node: "{{ ocp4_provisioner_vm_node }}"
+      vm_clone: "{{ ocp4_provisioner_vm_clone }}"
+      vm_pool: "{{ ocp4_provisioner_vm_pool }}"
+      vm_cores: "{{ ocp4_provisioner_vm_cores }}"
+      vm_ram: "{{ ocp4_provisioner_vm_ram }}"
+      vm_nics: "{{ ocp4_provisioner_vm_nics }}"
+
+- hosts: pve
+  tasks:
+  - name: configure OpenShift provisioner VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: configure_vm
+    vars:
+      vm_name: "{{ ocp4_provisioner_vm_name }}"
+      vm_id: "{{ hostvars['localhost']['proxmox_vm_result'].msg | regex_replace('^.* .*id ([0-9]{3}) .*$', '\\1') }}"
+      vm_disk_gb: "{{ ocp4_provisioner_vm_disk_gb }}"
+      vm_cores: "{{ ocp4_provisioner_vm_cores }}"
+      vm_ram: "{{ ocp4_provisioner_vm_ram }}"
+      vm_nics: "{{ ocp4_provisioner_vm_nics }}"
+
+- hosts: localhost
+  name: create and configure bootstrap VM
+  tasks:
+  - name: create bootstrap VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: clone_vm
+    vars:
+      vm_name: "{{ ocp4_bootstrap_vm_name }}"
+      vm_node: "{{ ocp4_bootstrap_vm_node }}"
+      vm_clone: "{{ ocp4_bootstrap_vm_clone }}"
+      vm_pool: "{{ ocp4_bootstrap_vm_pool }}"
+      vm_cores: "{{ ocp4_bootstrap_vm_cores }}"
+      vm_ram: "{{ ocp4_bootstrap_vm_ram }}"
+      vm_nics: "{{ ocp4_bootstrap_vm_nics }}"
+
+- hosts: pve
+  tasks:
+  - name: configure bootstrap VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: configure_vm
+    vars:
+      vm_name: "{{ ocp4_bootstrap_vm_name }}"
+      vm_id: "{{ hostvars['localhost']['proxmox_vm_result'].msg | regex_replace('^.* .*id ([0-9]{3}) .*$', '\\1') }}"
+      vm_disk_gb: "{{ ocp4_bootstrap_vm_disk_gb }}"
+      vm_cores: "{{ ocp4_bootstrap_vm_cores }}"
+      vm_ram: "{{ ocp4_bootstrap_vm_ram }}"
+      vm_nics: "{{ ocp4_bootstrap_vm_nics }}"
+
+- hosts: localhost
+  tasks:
+  - name: create master0 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: clone_vm
+    vars:
+      vm_name: "{{ ocp4_master0_vm_name }}"
+      vm_node: "{{ ocp4_master_vm_node }}"
+      vm_clone: "{{ ocp4_master_vm_clone }}"
+      vm_pool: "{{ ocp4_master_vm_pool }}"
+      vm_cores: "{{ ocp4_master_vm_cores }}"
+      vm_ram: "{{ ocp4_master_vm_ram }}"
+      vm_nics: "{{ ocp4_master0_vm_nics }}"
+
+- hosts: pve
+  tasks:
+  - name: configure master0 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: configure_vm
+    vars:
+      vm_name: "{{ ocp4_master0_vm_name }}"
+      vm_id: "{{ hostvars['localhost']['proxmox_vm_result'].msg | regex_replace('^.* .*id ([0-9]{3}) .*$', '\\1') }}"
+      vm_disk_gb: "{{ ocp4_master_vm_disk_gb }}"
+      vm_cores: "{{ ocp4_master_vm_cores }}"
+      vm_ram: "{{ ocp4_master_vm_ram }}"
+      vm_nics: "{{ ocp4_master0_vm_nics }}"
+
+- hosts: localhost
+  tasks:
+  - name: create master1 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: clone_vm
+    vars:
+      vm_name: "{{ ocp4_master1_vm_name }}"
+      vm_node: "{{ ocp4_master_vm_node }}"
+      vm_clone: "{{ ocp4_master_vm_clone }}"
+      vm_pool: "{{ ocp4_master_vm_pool }}"
+      vm_cores: "{{ ocp4_master_vm_cores }}"
+      vm_ram: "{{ ocp4_master_vm_ram }}"
+      vm_nics: "{{ ocp4_master1_vm_nics }}"
+
+- hosts: pve
+  tasks:
+  - name: configure master1 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: configure_vm
+    vars:
+      vm_name: "{{ ocp4_master1_vm_name }}"
+      vm_id: "{{ hostvars['localhost']['proxmox_vm_result'].msg | regex_replace('^.* .*id ([0-9]{3}) .*$', '\\1') }}"
+      vm_disk_gb: "{{ ocp4_master_vm_disk_gb }}"
+      vm_cores: "{{ ocp4_master_vm_cores }}"
+      vm_ram: "{{ ocp4_master_vm_ram }}"
+      vm_nics: "{{ ocp4_master1_vm_nics }}"
+
+- hosts: localhost
+  tasks:
+  - name: create master2 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: clone_vm
+    vars:
+      vm_name: "{{ ocp4_master2_vm_name }}"
+      vm_node: "{{ ocp4_master_vm_node }}"
+      vm_clone: "{{ ocp4_master_vm_clone }}"
+      vm_pool: "{{ ocp4_master_vm_pool }}"
+      vm_cores: "{{ ocp4_master_vm_cores }}"
+      vm_ram: "{{ ocp4_master_vm_ram }}"
+      vm_nics: "{{ ocp4_master2_vm_nics }}"
+
+- hosts: pve
+  tasks:
+  - name: configure master2 VM
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: configure_vm
+    vars:
+      vm_name: "{{ ocp4_master2_vm_name }}"
+      vm_id: "{{ hostvars['localhost']['proxmox_vm_result'].msg | regex_replace('^.* .*id ([0-9]{3}) .*$', '\\1') }}"
+      vm_disk_gb: "{{ ocp4_master_vm_disk_gb }}"
+      vm_cores: "{{ ocp4_master_vm_cores }}"
+      vm_ram: "{{ ocp4_master_vm_ram }}"
+      vm_nics: "{{ ocp4_master2_vm_nics }}"
+
+- hosts: localhost
+  tasks:
+  - name: start OpenShift Provisioner VM
+    vars:
+      vm_name: "{{ ocp4_provisioner_vm_name }}"
+    include_role:
+      name: kjw3.proxmox_vm
+      tasks_from: start_vm

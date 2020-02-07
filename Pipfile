@@ -12,6 +12,9 @@ pyyaml = ">=4.2b1"
 requests = ">=2.20.0"
 netaddr = ">=0.7.19"
 urllib3 = ">=1.24.2"
+dnspython = ">=1.16.0"
+proxmoxer = ">=1.0.3"
+pyghmi = ">=1.5.5"
 
 [requires]
 python_version = "3.7"
